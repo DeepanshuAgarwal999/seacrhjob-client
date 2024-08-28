@@ -20,7 +20,7 @@ const JobDetails = ({ id }: { id: string | undefined }) => {
             <div className='overflow-y-auto h-[400px] '>
                 <div className='border-b p-6 flex flex-col gap-2'>
                     <h1 className='text-xl font-bold'>Job details</h1>
-                    <p className='text-sm text-[#868484] font-light '>Here’s how the job details align with your profile.</p>
+                    <p className='text-sm text-[#868484] font-light '>Here&apos;s how the job details align with your profile.</p>
                     <p className='flex items-center gap-2  font-semibold'><Banknote /> Pay</p>
                     <strong className='inline-flex'>₹41,40,000 - ₹62,10,000 a year</strong>
                     <p className='font-semibold inline-flex gap-2'><BriefcaseBusiness className='size-5' /> Job type</p>
@@ -56,7 +56,7 @@ const JobDetails = ({ id }: { id: string | undefined }) => {
                     <h2 className=''>Education:
                     </h2>
                     <ul className='list-disc px-4 '>
-                        <li>Bachelor's (Required)
+                        <li>{"Bachelor's (Required)"}
                         </li>
                     </ul>
                     <h2>

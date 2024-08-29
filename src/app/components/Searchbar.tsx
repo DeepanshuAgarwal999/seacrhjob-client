@@ -16,7 +16,7 @@ const SearchBar = () => {
                     <MapPin />
                     <input type="text" placeholder='City,state,zip code,or "remote"' className='w-full outline-none' />
                 </div>
-                <Button className='bg-blue-900 mr-2'>Find Jobs</Button>
+                <Button className='bg-blue-900 mr-2 text-white' variant={'ghost'}>Find Jobs</Button>
             </div>
             
 

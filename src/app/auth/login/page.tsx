@@ -20,30 +20,39 @@ import Link from "next/link"
 import Image from "next/image"
 import googleLogo from '../../../../public/assets/icons/google.svg'
 import { signIn } from "next-auth/react"
+import { useRouter } from "next/navigation"
 
 
 
 const formSchema = z.object({
     email: z.string().email(),
-    password: z.string().min(3, "Minimum 3 character required")
+    password: z.string().min(6, "Minimum 3 character required")
 })
 
 export default function LoginForm() {
     const [showPassword, setShowPassword] = useState<boolean>(true);
     // 1. Define your form.
+    const router = useRouter();
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             email: "john@doe.com",
-            password: "john"
+            password: "123456"
         },
     })
 
     // 2. Define a submit handler.
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values)
+
+        const result = await signIn('credentials', {
+            redirect: true,
+            callbackUrl: '/',
+            email: values.email,
+            password: values.password,
+        });
+        if (result && result.status === 200) {
+            router.push('/')
+        }
     }
 
     const handleLoginWithGoogle = async () => {
@@ -67,7 +76,7 @@ export default function LoginForm() {
                                 <FormItem>
                                     <FormLabel>Email</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Email address" {...field} />
+                                        <Input placeholder="Email address" {...field} className="outline-none" />
                                     </FormControl>
 
                                     <FormMessage />
@@ -82,7 +91,7 @@ export default function LoginForm() {
                                     <FormLabel>Password</FormLabel>
                                     <FormControl className="flex items-center justify-between border rounded-md pr-2">
                                         <div>
-                                            <Input type={showPassword ? "password" : "text"} placeholder="password" {...field} className="border-none" />
+                                            <Input type={showPassword ? "password" : "text"} placeholder="password" {...field} className="border-none outline-none" />
                                             <Button className="w-fit p-0 h-0" variant={'ghost'} onClick={() => setShowPassword((prev) => !prev)}> {!showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}</Button>
                                         </div>
                                     </FormControl>

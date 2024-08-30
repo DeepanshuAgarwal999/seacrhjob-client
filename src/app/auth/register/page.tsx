@@ -17,30 +17,48 @@ import { Input } from "@/components/ui/input"
 import { Eye, EyeOff } from "lucide-react"
 import { useState } from "react"
 import Link from 'next/link'
+import { axiosInstance } from '@/lib/axios.instance'
+import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 
 const formSchema = z.object({
     email: z.string().email(),
-    password: z.string().min(3, "Minimum 3 character required"),
-    name: z.string().min(3, "Minimum 3 character required")
+    password: z.string().min(6, "Minimum 3 character required"),
+    name: z.string().min(2, "Minimum 3 character required")
 })
 const Register = () => {
     const [showPassword, setShowPassword] = useState<boolean>(true);
-    // 1. Define your form.
+    const router = useRouter();
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             email: "john@doe.com",
-            password: "john",
-            name: "john"
+            password: "john1234",
+            name: "john1234"
         },
     })
 
-    // 2. Define a submit handler.
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values)
+        try {
+            const { data, status } = await axiosInstance.post("/auth/register", values)
+            console.log(data, status)
+            if (status === 201) {
+                router.push('/auth/login')
+                toast(data.message)
+            }
+            else if (status === 409) {
+                toast("Account already exist!")
+            }
+            else if (status === 400) {
+                toast("Invalid credentials")
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
     }
+
     return (
         <section className="container mx-auto h-screen pt-20">
             <h1 className="text-4xl font-bold text-center">Register</h1>

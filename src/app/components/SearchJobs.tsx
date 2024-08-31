@@ -11,7 +11,7 @@ const SearchJobs = async ({ id }: { id: string | undefined }) => {
     return (
         <div className='flex gap-6 justify-center'>
             <div className='flex flex-col gap-10'>
-                {companies && companies.length !== 0 && companies?.map((companyDetails) => <JobCard company={companyDetails} />)}
+                {companies && companies.length !== 0 && companies?.map((companyDetails) => <JobCard company={companyDetails} key={companyDetails._id}/>)}
             </div>
             <div className='flex-1'>
                 {!!id && <JobDetails id={id} />}

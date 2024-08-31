@@ -2,7 +2,6 @@ import { CustomSession, CustomUser } from "@/types";
 import { Account, AuthOptions, User } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import GoogleProvider from "next-auth/providers/google";
-import CredentialsProvider from "next-auth/providers/credentials";
 import { redirect } from "next/navigation";
 import { AxiosError } from "axios";
 import { axiosInstance } from "@/lib/axios.instance";
@@ -46,9 +45,10 @@ export const authOptions: AuthOptions = {
             "/auth/login",
             requestBody
           );
-          console.log(status);
-          console.log(data);
-          if (data) return data.user;
+          if (data) {
+            console.log(data.user);
+            return data.user;
+          }
 
           return null;
         } catch (error) {
@@ -68,7 +68,6 @@ export const authOptions: AuthOptions = {
     }) {
       try {
         if (account?.provider === "google" && account.providerAccountId) {
-          console.log("Called");
           const payload = {
             email: user.email!,
             name: user.name!,
@@ -80,7 +79,7 @@ export const authOptions: AuthOptions = {
           user.token = data.user.token;
           return true;
         }
-         if (account?.provider === "credentials") {
+        if (account?.provider === "credentials") {
           return true;
         } else {
           return false;

@@ -21,6 +21,7 @@ import Image from "next/image"
 import googleLogo from '../../../../public/assets/icons/google.svg'
 import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
 
 
@@ -31,7 +32,6 @@ const formSchema = z.object({
 
 export default function LoginForm() {
     const [showPassword, setShowPassword] = useState<boolean>(true);
-    // 1. Define your form.
     const router = useRouter();
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -41,7 +41,6 @@ export default function LoginForm() {
         },
     })
 
-    // 2. Define a submit handler.
     async function onSubmit(values: z.infer<typeof formSchema>) {
 
         const result = await signIn('credentials', {
@@ -51,7 +50,7 @@ export default function LoginForm() {
             password: values.password,
         });
         if (result && result.status === 200) {
-            router.push('/')
+            toast("Logged in successfully")
         }
     }
 

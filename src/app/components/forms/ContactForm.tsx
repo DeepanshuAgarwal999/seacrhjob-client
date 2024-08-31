@@ -43,7 +43,6 @@ export default function ContactForm({ id }: { id: string }) {
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values)
     router.push(`/form/${id}/resume`)
   }
 

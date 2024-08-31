@@ -15,9 +15,9 @@ const Home = async ({ searchParams }: SearchParamProps) => {
   return (
     <section>
       <Navbar user={session?.user} />
-      <div className='py-6 flex justify-center container'>
+      {/* <div className='py-6 flex justify-center container'>
         <SearchBar />
-      </div>
+      </div> */}
       <Tabs defaultValue="findJobs" className="pt-14">
         <TabsList className='flex justify-center w-fit mx-auto mb-6'>
           <TabsTrigger value="findJobs" >Search jobs</TabsTrigger>

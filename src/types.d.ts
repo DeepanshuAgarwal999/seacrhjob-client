@@ -17,3 +17,20 @@ declare interface CustomUser {
   provider?: string | null;
   token?: string | null;
 }
+
+declare interface Company {
+  _id: string;
+  title: string;
+  name: string;
+  location: string;
+  pay: string;
+  type: "Remote" | "Full time" | "Part time";
+  benefits: string[];
+  description: string;
+  responsibilities: string[];
+  requirements: {
+    education: string[];
+    experience: string[];
+  };
+  postedOn: string;
+}
